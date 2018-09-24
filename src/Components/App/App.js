@@ -14,6 +14,12 @@ class App extends Component {
     },
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistname = this.updatePlaylistname.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
+    this.search = this.search.bind(this);
+
+
+
   };
 
 
@@ -30,7 +36,20 @@ class App extends Component {
       updatedplaylist.splice(this.state.playlistTracks.indexOf(track), 1);
       this.setState({playlistTracks: updatedplaylist});
     }
+
+    updatePlaylistname(name){
+      this.state.playlistName = name;
+    }
   
+    savePlaylist(){
+      let trackURIs = this.state.playlistTracks.map(track => {
+        return track.uri;
+    });
+    }
+
+    search(term){
+      console.log(term)
+    }
 
 
 
@@ -39,10 +58,10 @@ class App extends Component {
       <div>
        <h1>Ja<span className="highlight">mmm</span>ing</h1>
        <div className="App">
-        <SearchBar />
+        <SearchBar onSearch={this.search} />
        <div className="App-playlist">
          <SearchResults searchResults={this.props.searchResults} onAdd={this.addTrack}/>
-         <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack}/>
+         <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onSave={this.savePlaylist}/>
     </div>
   </div>
 </div>
